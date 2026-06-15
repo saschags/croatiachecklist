@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodinná dovolenka – Checklist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #F5EFE0;
+    --sea: #1A6B8A;
+    --seafoam: #4AADBE;
+    --coral: #E8604A;
+    --dusk: #2C3E50;
+    --mist: #E8F4F8;
+    --checked-bg: #d4ede8;
+  }
+
+  body {
+    background: var(--sand);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dusk);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  header {
+    background: var(--sea);
+    color: white;
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 40px;
+    background: var(--sand);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .waves {
+    font-size: 28px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  header p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .progress-bar-wrap {
+    background: var(--mist);
+    border-radius: 12px;
+    margin: 28px 20px 0;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--seafoam), var(--coral));
+    border-radius: 12px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--sea);
+    font-weight: 600;
+    margin: 8px 20px 0;
+  }
+
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 16px 0;
+  }
+
+  .section {
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(26,107,138,0.07);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: var(--sea);
+    color: white;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header .icon { font-size: 1.3rem; }
+
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    flex: 1;
+  }
+
+  .section-count {
+    font-size: 0.78rem;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .section-body { padding: 8px 0; }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 0;
+  }
+
+  .item:hover { background: var(--mist); }
+
+  .item.done {
+    background: var(--checked-bg);
+  }
+
+  .item.done .item-label {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  .checkbox {
+    width: 22px; height: 22px;
+    border: 2px solid var(--seafoam);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 13px;
+  }
+
+  .item.done .checkbox {
+    background: var(--seafoam);
+    border-color: var(--seafoam);
+    color: white;
+  }
+
+  .item-label { font-size: 0.92rem; flex: 1; }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge-both { background: #e3f2fd; color: #1565c0; }
+  .badge-sestra { background: #fce4ec; color: #c62828; }
+  .badge-dolezite { background: #fff3e0; color: #e65100; }
+
+  .divider {
+    height: 1px;
+    background: var(--mist);
+    margin: 0 18px;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 28px auto 0;
+    padding: 12px 32px;
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    box-shadow: 0 4px 12px rgba(232,96,74,0.25);
+  }
+  .reset-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .tip-box {
+    background: linear-gradient(135deg, #e8f7fa, #fff3e8);
+    border-left: 4px solid var(--coral);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 20px 16px 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .tip-box strong { color: var(--coral); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="waves">🌊 🌊 🌊</div>
+  <h1>Rodinná dovolenka</h1>
+  <p>Ja · Mamka · Ajka · Luky</p>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="bar"></div></div>
+  <div class="progress-label" id="prog">0 / 0 zabalených</div>
+</header>
+
+<main id="main"></main>
+
+
+
+<button class="reset-btn" onclick="resetAll()">↺ Resetovať checklist</button>
+
+<script>
+const sections = [
+  {
+    icon: "👙", title: "Oblečenie", color: "#1A6B8A",
+    items: [
+      { label: "Nohavičky" },
+      { label: "Ponožky" },
+      { label: "Plavky" },
+      { label: "Tielka" },
+      { label: "Crop topy" },
+      { label: "Tričká" },
+      { label: "Šaty" },
+      { label: "Športové podprsenky" },
+      { label: "Dlhé tričká" },
+      { label: "Mikina / sveter" },
+      { label: "Topánky – botasky, podpätky, šlapky" },
+      { label: "Legíny / dlhé nohavice" },
+      { label: "Kraťase" },
+      { label: "Uterák" },
+      { label: "Šiltovka / klobúk" },
+      { label: "Okuliare" },
+      { label: "Pyžamo" },
+      { label: "Opasok" },
+      { label: "Prehoz na pláž" },
+    ]
+  },
+  {
+    icon: "🧴", title: "Drogéria", color: "#1A6B8A",
+    items: [
+      { label: "Šampón" },
+      { label: "Maska na vlasy" },
+      { label: "Kondicionér" },
+      { label: "Olej na vlasy" },
+      { label: "Sprchový gél" },
+      { label: "Opaľovací krém / olej" },
+      { label: "Panthenol" },
+      { label: "Balzam na pery" },
+      { label: "Deodorant + voňavka" },
+      { label: "Hrebeň" },
+      { label: "Zubná kefka + pasta" },
+      { label: "Holítko + pena" },
+      { label: "Základná lekárnička (náplasti, Ibalgin, lieky na hnačku, na menštruáciu)" },
+      { label: "Doplnky (karotén, Mg, kolagén, multi, elektrolyty)" },
+      { label: "Fenystyl" },
+      { label: "Vložky, tampóny" },
+      { label: "Manikúra" },
+      { label: "Tampóniky + tyčinky do uší" },
+      { label: "Gumičky a sponky" },
+      { label: "Gumičky a sponky" },
+      { label: "Vreckovky / vlhčené obrúsky" },
+    ]
+  },
+  {
+    icon: "🌊", title: "Voda & pláž", color: "#1A6B8A",
+    items: [
+      { label: "Paddleboard" },
+      { label: "Nafukovačky" },
+      { label: "Plutvy" },
+      { label: "Šnorchel" },
+      { label: "Potápačské okuliare" },
+      { label: "Plážová taška" },
+      { label: "Podložka na pláž" },
+      { label: "Nepremokavé puzdro na mobil" },
+      { label: "Vodotesný vak na veci" },
+      { label: "Vrecká na odpadky" },
+      { label: "Štuple do uší" },
+      { label: "Doska na plávanie" },
+    ]
+  },
+  {
+    icon: "📄", title: "Dôležité", color: "#1A6B8A",
+    items: [
+      { label: "Mobil", badge: "dolezite" },
+      { label: "Nabíjačka (hodinky, mobil…)", badge: "dolezite" },
+      { label: "Tablet" },
+      { label: "Slúchadlá" },
+      { label: "Powerbanka" },
+      { label: "Hodinky na ruku" },
+      { label: "Doklady (občiansky, pas, kartička ZP…)", badge: "dolezite" },
+      { label: "Papier – potvrdenie o ubytovaní", badge: "dolezite" },
+      { label: "Cestovné poistenie (potvrdenie)", badge: "dolezite" },
+      { label: "Peniaze / karta", badge: "dolezite" },
+      { label: "Kľúče", badge: "dolezite" },
+      { label: "Reproduktor", badge: "dolezite" },
+    ]
+  },
+  {
+    icon: "🍎", title: "Jedlo", color: "#1A6B8A",
+    items: [
+      { label: "Voda + fľaša" },
+      { label: "Šumienky" },
+      { label: "Polievky" },
+      { label: "Sladké a slané snacky" },
+      { label: "Pečivo na cestu" },
+    ]
+  },
+  {
+    icon: "🧸", title: "Ajda", color: "#1A6B8A",
+    items: [
+      { label: "Plyšák" },
+      { label: "Pomôcky do vody (rukávniky…)" },
+      { label: "Hračky" },
+      { label: "Karty / hry / omaľovánky" },
+      { label: "Farbičky" },
+    ]
+  },
+  {
+    icon: "🚗", title: "Na cestu", color: "#1A6B8A",
+    items: [
+      { label: "Deka" },
+      { label: "Vankúšik" },
+    ]
+  },
+];
+
+const badgeMap = {
+  obe: { cls: "badge-both", text: "obidve" },
+  sestra: { cls: "badge-sestra", text: "sestrička" },
+  dolezite: { cls: "badge-dolezite", text: "⚠ dôležité" },
+};
+
+let state = {};
+
+function getKey(si, ii) { return `s${si}_i${ii}`; }
+
+function save() { localStorage.setItem('chorvatsko_checklist', JSON.stringify(state)); }
+function load() {
+  try { const s = localStorage.getItem('chorvatsko_checklist'); if (s) state = JSON.parse(s); } catch(e) {}
+}
+
+function resetAll() {
+  state = {};
+  save();
+  render();
+}
+
+function toggle(si, ii) {
+  const k = getKey(si, ii);
+  state[k] = !state[k];
+  save();
+  updateItem(si, ii);
+  updateProgress();
+  updateSectionCount(si);
+}
+
+function updateItem(si, ii) {
+  const el = document.getElementById(`item-${si}-${ii}`);
+  if (!el) return;
+  const done = !!state[getKey(si, ii)];
+  el.classList.toggle('done', done);
+  el.querySelector('.checkbox').textContent = done ? '✓' : '';
+}
+
+function updateSectionCount(si) {
+  const sec = sections[si];
+  const doneCount = sec.items.filter((_, ii) => !!state[getKey(si, ii)]).length;
+  const el = document.getElementById(`count-${si}`);
+  if (el) el.textContent = `${doneCount}/${sec.items.length}`;
+}
+
+function updateProgress() {
+  let total = 0, done = 0;
+  sections.forEach((sec, si) => {
+    sec.items.forEach((_, ii) => {
+      total++;
+      if (state[getKey(si, ii)]) done++;
+    });
+  });
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('prog').textContent = `${done} / ${total} zabalených`;
+}
+
+function render() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  sections.forEach((sec, si) => {
+    const doneCount = sec.items.filter((_, ii) => !!state[getKey(si, ii)]).length;
+    const div = document.createElement('div');
+    div.className = 'section';
+    let itemsHtml = sec.items.map((item, ii) => {
+      const done = !!state[getKey(si, ii)];
+      const b1 = item.badge ? `<span class="badge ${badgeMap[item.badge].cls}">${badgeMap[item.badge].text}</span>` : '';
+      const b2 = item.badge2 ? `<span class="badge ${badgeMap[item.badge2].cls}">${badgeMap[item.badge2].text}</span>` : '';
+      return `
+        <div class="item${done ? ' done' : ''}" id="item-${si}-${ii}" onclick="toggle(${si},${ii})">
+          <div class="checkbox">${done ? '✓' : ''}</div>
+          <span class="item-label">${item.label}</span>
+          ${b1}${b2}
+        </div>
+        ${ii < sec.items.length - 1 ? '<div class="divider"></div>' : ''}
+      `;
+    }).join('');
+    div.innerHTML = `
+      <div class="section-header">
+        <span class="icon">${sec.icon}</span>
+        <h2>${sec.title}</h2>
+        <span class="section-count" id="count-${si}">${doneCount}/${sec.items.length}</span>
+      </div>
+      <div class="section-body">${itemsHtml}</div>
+    `;
+    main.appendChild(div);
+  });
+  updateProgress();
+}
+
+load();
+render();
+</script>
+</body>
+</html>
